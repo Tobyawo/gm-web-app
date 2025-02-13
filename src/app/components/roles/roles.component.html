@@ -1,0 +1,57 @@
+<p>roles components works!</p>
+
+<div class="row">
+  <div class="col-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Sr No</th>
+          <th>Role Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let role of roleList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ role.role }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- <div class="row">
+    <div class="col-3">
+        <h1>{{title}}</h1>
+    </div>
+    <div class="col-3"> -->
+<!-- this is interpolation-->
+<!-- <h1>{{name}}</h1> 
+    </div>
+    <div class="col-3">
+        <h1>{{degree}}</h1>
+    </div>
+    <div class="col-3">
+        <h1>{{date}}</h1>
+    </div>
+
+    <div class="col-3"> -->
+<!-- This is property binding -->
+<!-- <input type="text" [value]="name" class="form-control"/>
+    </div>
+
+    <div class="col-3"> -->
+<!-- This is two-way binding using ngModel -->
+<!-- <input type="text" [(ngModel)]="name" class="form-control"/>
+    </div>
+
+    <div class="col-3"> -->
+<!-- This is event binding function without parameter-->
+<!-- <button (click)="displayMessage()" class="btn btn-success">Show alert</button>
+    </div>
+
+    <div class="col-3"> -->
+<!-- This is event binding function with parameter-->
+<!-- <button (click)="displayMessage2('Toby')" class="btn btn-success">Show alert with name</button>
+    </div>
+</div> -->
