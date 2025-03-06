@@ -1,14 +1,15 @@
 import { ChangeDetectorRef, Component, inject, Inject, OnInit, signal } from '@angular/core';
 import { MasterService } from '../../services/master.service';
 import { APIResponse } from '../../model/interface/roles';
-import { Employee } from '../../model/class/Employee';
+import { User } from '../../model/class/User';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { map, Observable } from 'rxjs';
+import { AlertComponent } from '../reusableComponent/alert/alert.component';
 
 @Component({
   selector: 'app-employee',
-  imports: [AsyncPipe, FormsModule],
+  imports: [FormsModule, AlertComponent],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css'
 })
@@ -20,15 +21,15 @@ export class EmployeeComponent implements OnInit{
 isFormVisiable = signal<boolean>(false);
 isApiCallInProgress = signal<boolean>(false);
 isLoader = signal<boolean>(true);
-employeeObj: Employee = new Employee();
-employeeList : Employee[] =[];
+employeeObj: User = new User();
+employeeList : User[] =[];
 childDeptList =  signal<any[]>([]);
 parentDept$ : Observable<any[]> = new Observable<any[]>(); 
 parentDeptId: number =  0;
 
 
 ngOnInit(): void { 
-  this.getEmployees();
+  this.getAdmins();
 } 
 
 constructor( private chageDetection:ChangeDetectorRef){
@@ -53,11 +54,12 @@ onParentDeptChange() {
 
 
 
-  getEmployees() {
+  getAdmins() {
     // debugger
     this.masterSrv.getAllEmployee().subscribe((res:APIResponse)=>{ 
       // debugger
        this.employeeList = res.data;
+        console.log(this.employeeList);
       //  this.chageDetection.detectChanges();
        this.isLoader.set(false)
      })
@@ -66,7 +68,7 @@ onParentDeptChange() {
 
   onDelete(id: number) {}
 
-  onEdit(data: Employee) {
+  onEdit(data: User) {
     this.employeeObj =  data;
     this.isFormVisiable.set(true)
   }
@@ -74,8 +76,8 @@ onParentDeptChange() {
   onUpdate() {
     this.masterSrv.updateEmp(this.employeeObj).subscribe((res:APIResponse)=>{
       alert("Employee Update")
-      this.getEmployees();
-      this.employeeObj = new Employee();
+      this.getAdmins();
+      this.employeeObj = new User();
     },error=>{
       alert('API Error')
     })
@@ -85,7 +87,7 @@ onParentDeptChange() {
     this.masterSrv.createNewEmployee(this.employeeObj).subscribe((res:APIResponse)=>{
 if(res.result) {
 alert("Employee Created Successfully");
-this.employeeObj = new Employee();
+this.employeeObj = new User();
 } else{
   alert("Employee Creation Failed " + res.message);
 }

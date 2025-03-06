@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { APIResponse } from '../model/interface/roles';
+import { APIResponse, LoginResponse, NewUserResponse, UserResponse } from '../model/interface/roles';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Employee } from '../model/class/Employee';
+import { User } from '../model/class/User';
 import { Constant } from '../constants/Constant';
+import { LoginDto } from '../model/class/LoginDto';
+import { User2 } from '../model/class/User2';
 
 @Injectable({
   providedIn: 'root'
@@ -46,10 +48,25 @@ export class MasterService {
     return this.http.get<APIResponse>(environment.API_URL + 'GetAllEmployee');
   }
 
+  getAllUser():Observable<UserResponse>{
+    return this.http.get<UserResponse>("http://localhost:8087/gm-user/api/admin/page/1?sortDir=asc&sortField=id");
+  }
 
+
+  createNewUser(newUser: any): Observable<NewUserResponse>{
+    return this.http.post<NewUserResponse>("http://localhost:8087/gm-user/api/sign-up", newUser);
+  }
 
   createNewEmployee(employeeData: any): Observable<APIResponse>{
     return this.http.post<APIResponse>(environment.API_URL + 'CreateNewEmployee', employeeData );
+  }
+
+  login(loginData: LoginDto): Observable<LoginResponse>{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Host': 'gm-api.local', // Set host header
+    });
+    return this.http.post<LoginResponse>("http://localhost:8080/gm-access/api/auth", loginData, { headers });
   }
 
 
@@ -67,8 +84,14 @@ export class MasterService {
   }
 
 
-  updateEmp(obj: Employee): Observable<APIResponse> {
-    debugger;
+  
+  updateUser(obj: User2): Observable<UserResponse> {
+  
+    return this.http.put<UserResponse>("http://localhost:8087/gm-user/api/user/update", obj);
+  }
+
+  updateEmp(obj: User): Observable<APIResponse> {
+ 
     return this.http.put<APIResponse>(environment.API_URL+ "UpdateEmployee/" + obj.empId, obj);
   }
 

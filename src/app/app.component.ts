@@ -5,7 +5,7 @@ import { MasterComponent } from './components/master/master.component';
 
 @Component({
   selector: 'app-root',
-  imports: [MasterComponent, RouterModule, RouterLink, RouterLinkActive],
+  imports: [RouterModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
