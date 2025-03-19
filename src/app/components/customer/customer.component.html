@@ -1,0 +1,126 @@
+<div class="tab-pane fade show active" id="employees" role="tabpanel">
+    <div class="row">
+        <div class="col-6">
+            <h2>Customers</h2>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-success" (click)="isFormVisiable.set(true)"> Add New</button>
+        </div>
+    </div>
+    <app-alert [message]="'Hello from Parent'"></app-alert>   
+    <!-- Customer Form -->
+    @if (isFormVisiable()) {
+        <form class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" name="firstName" [(ngModel)]="user.firstName" id="firstName" placeholder="Enter first name">
+                </div>
+                <div class="col-md-4">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" [(ngModel)]="user.lastName" id="lastName" placeholder="Enter last name">
+                </div>
+                <div class="col-md-4">
+                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="user.phoneNumber" id="phoneNumber" placeholder="Phone Number">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" [(ngModel)]="user.email" id="email" placeholder="Enter email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" [(ngModel)]="user.password" id="password" placeholder="Enter password">
+                </div>
+                <div class="col-md-4">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select id="gender" class="form-select" name="gender" [(ngModel)]="user.gender">
+                        <option selected>Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div> 
+            @if (this.user.id == 0) {
+                <button type="button" class="btn btn-primary mt-3" (click)="onSave()">
+                    @if (isApiCallInProgress()) {
+                        <span class="spinner-grow spinner-grow-sm"></span>
+                    }
+                    Save User
+                </button>
+            } @else {
+                <button type="button" class="btn btn-warning mt-3" (click)="onUpdate()">Update User</button>
+            }
+            <button class="btn btn-success mt-3 mx-2" (click)="isFormVisiable.set(false)">Close</button>
+        </form>
+    }
+
+    <!-- Customer Table -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Contact No</th>
+                <th>Email</th>
+                <th>Enabled</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (isLoader()) {
+                <tr>
+                    <td colspan="7" class="text-center">
+                        <div class="spinner-grow text-muted"></div>
+                        <div class="spinner-grow text-primary"></div>
+                        <div class="spinner-grow text-success"></div>
+                        <div class="spinner-grow text-info"></div>
+                        <div class="spinner-grow text-warning"></div>
+                        <div class="spinner-grow text-danger"></div>
+                        <div class="spinner-grow text-secondary"></div>
+                        <div class="spinner-grow text-dark"></div>
+                        <div class="spinner-grow text-light"></div>
+                    </td>
+                </tr>
+            } 
+            
+
+            @else {
+                @for (item of userList; track $index) {
+                    <tr>
+                        <td>{{$index+1}}</td>
+                        <td>{{item.fullName}}</td>
+                        <td>{{item.phoneNumber}}</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.enabled}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary mt-3" (click)="onEdit(item)">Edit</button>
+                            <button type="button" class="btn btn-danger mt-3 mx-2" (click)="onDelete(item.id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+         
+            }
+            <!-- @else {
+                @for (let item of userList; let i = index) {
+                    <tr>
+                        <td>{{i + 1}}</td>
+                        <td>{{item.fullName}}</td>
+                        <td>{{item.phoneNumber}}</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.enabled}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary mt-3" (click)="onEdit(item)">Edit</button>
+                            <button type="button" class="btn btn-danger mt-3 mx-2" (click)="onDelete(item.empId)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            } -->
+        </tbody>
+    </table>
+</div>
