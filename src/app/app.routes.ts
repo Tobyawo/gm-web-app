@@ -7,6 +7,10 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { authGuard } from './services/auth.guard';
 import { CustomerComponent } from './components/customer/customer.component';
 import { RegisterComponent } from './components/register/register.component';
+import { FaceMatchComponent } from './components/face-match/face-match.component';
+import { SubscriptionComponent } from './components/subscription/subscription.component';
+import { CartComponent } from './components/cart/cart.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 export const routes: Routes = [
 
@@ -30,7 +34,7 @@ export const routes: Routes = [
 {
     path: '',
     component:LayoutComponent,
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     children: [
         {
             path: 'master',
@@ -49,6 +53,24 @@ export const routes: Routes = [
         {
             path: 'customer',
             component:CustomerComponent
+        },
+        
+        {
+            path: 'facematch',
+            component:FaceMatchComponent
+        },
+        {
+            path: 'subscription',
+            component:SubscriptionComponent
+        },
+        {
+            path: 'cart',
+            component:CartComponent
+        },
+
+        {
+            path: 'checkout',
+            component:CheckoutComponent
         },
         
     

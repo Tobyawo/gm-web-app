@@ -1,0 +1,19 @@
+<!-- cart.component.html -->
+<div class="cart-container">
+    <h2>Shopping Cart</h2>
+    <ul class="cart-items">
+      <li *ngFor="let item of cartItems" class="cart-item">
+        <span>{{ item.name }}</span>
+        <span>
+          <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item.id, item.quantity)" />
+          x ${{ item.price }}
+        </span>
+        <button (click)="removeItem(item.id)">Remove</button>
+      </li>
+    </ul>
+    <div class="cart-total">
+      <strong>Total: ${{ total }}</strong>
+    </div>
+    <button (click)="clearCart()">Clear Cart</button>
+    <button (click)="navigateToCheckout()">Checkout</button>
+  </div>

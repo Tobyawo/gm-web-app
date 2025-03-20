@@ -1,0 +1,28 @@
+<div class="container">
+    <h2>Subscribe to Face Match Service</h2>
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="email" placeholder="Enter your email" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="subscriptionType">Subscription Plan:</label>
+        <select id="subscriptionType" [(ngModel)]="subscriptionType" class="form-control">
+            <option value="basic">Basic - $10/month</option>
+            <option value="premium">Premium - $25/month</option>
+            <option value="enterprise">Enterprise - $50/month</option>
+        </select>
+    </div>
+
+    <button (click)="subscribe()" class="btn btn-success">Subscribe Now</button>
+
+    <h3>Current Subscriptions</h3>
+    <button (click)="getSubscriptions()" class="btn btn-info">Refresh Subscriptions</button>
+
+    <ul class="subscription-list">
+        <li *ngFor="let sub of subscriptions">
+            <strong>{{ sub.plan }}</strong> - {{ sub.email }} ({{ sub.status }})
+        </li>
+    </ul>
+</div>
